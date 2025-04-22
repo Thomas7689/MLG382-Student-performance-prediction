@@ -14,7 +14,7 @@ import joblib
 
 def ReadFile():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(BASE_DIR, '../Project 1/Student_performance_data.csv')
+    file_path = os.path.join(BASE_DIR, '../data/Student_performance_data.csv')
     df = pd.read_csv(file_path)
     df.drop(columns='StudentID', inplace=True)
     return df
