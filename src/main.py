@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import joblib
 import os
+import itertools
 
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ def predict():
         selected_columns = data['columns']
         
         # Generate the filename based on the selected model and columns
-        filename = os.path.join('models', f"model_{typeOfModel}_{'_'.join(selected_columns)}.joblib")
+        filename = os.path.join('artifacts', f"model_{typeOfModel}_{'_'.join(selected_columns)}.joblib")
         
         # Load the trained model
         if os.path.exists(filename):
@@ -51,7 +52,7 @@ def predict():
 
 @app.route('/list_models', methods=['GET'])
 def list_models():
-    model_files = [f for f in os.listdir('models') if f.endswith('.joblib')]
+    model_files = [f for f in os.listdir('artifacts') if f.endswith('.joblib')]
     models_info = {}
     for model_file in model_files:
         parts = model_file.split('_')
