@@ -42,7 +42,7 @@ def TrainModel(dataFrame, TrainOnColumns, typeOfModel, testSize = 0.2):
             }
             model = BayesSearchCV(pipe, searchSpace, cv=5, n_iter=20, scoring='roc_auc_ovr', random_state=1, refit=True)
             model.fit(xTrain, yTrain)
-        case 'Random Forrest':
+        case 'Random Forest':
             RFModel = RandomForestClassifier(random_state=1)
             searchSpace = {
                 'max_depth': Integer(2, 6),

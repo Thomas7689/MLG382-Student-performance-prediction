@@ -23,25 +23,31 @@
                 <label><input type="checkbox" name="columns" value="Music" checked> Music</label>
                 <label><input type="checkbox" name="columns" value="Volunteering" checked> Volunteering</label>
                 <label><input type="checkbox" name="columns" value="GPA" checked> GPA</label>
-                <button type="button" onclick="trainModel()">Train Model</button>
+                <select id="trainModelSelector">
+                    <option value="XGBoost">XGBoost</option>
+                    <option value="Neural Network">Neural Network</option>
+                    <option value="Random Forest">Random Forest</option>
+                    <option value="Logistic Regression">Logistic Regression</option>
+                </select>
+                <button type="button" onclick="trainModel()" >Train Model</button>
             </div>
             <div class="form-group">
                 <form id="predictForm">
                     <div class="input-group">
                         <div>
                             <label for="age">Age</label>
-                            <input type="number" id="age" name="Age" placeholder="Age" min="15" max="18" value="15" />
+                            <input type="number" id="age" name="Age" placeholder="Age" min="15" max="18" value="15" data-column="Age" />
                         </div>
                         <div>
                             <label for="gender">Gender</label>
-                            <select id="gender" name="Gender">
+                            <select id="gender" name="Gender" data-column="Gender">
                                 <option value="0">Male</option>
                                 <option value="1">Female</option>
                             </select>
                         </div>
                         <div>
                             <label for="ethnicity">Ethnicity</label>
-                            <select id="ethnicity" name="Ethnicity">
+                            <select id="ethnicity" name="Ethnicity" data-column="Ethnicity">
                                 <option value="0">Caucasian</option>
                                 <option value="1">African American</option>
                                 <option value="2">Asian</option>
@@ -50,7 +56,7 @@
                         </div>
                         <div>
                             <label for="parentalEducation">Parental Education</label>
-                            <select id="parentalEducation" name="ParentalEducation">
+                            <select id="parentalEducation" name="ParentalEducation" data-column="ParentalEducation">
                                 <option value="0">None</option>
                                 <option value="1">High School</option>
                                 <option value="2">Some College</option>
@@ -60,22 +66,22 @@
                         </div>
                         <div>
                             <label for="studyTimeWeekly">Study Time Weekly</label>
-                            <input type="number" id="studyTimeWeekly" name="StudyTimeWeekly" placeholder="Study Time Weekly" value="0" />
+                            <input type="number" id="studyTimeWeekly" name="StudyTimeWeekly" placeholder="Study Time Weekly" value="0" data-column="StudyTimeWeekly" />
                         </div>
                         <div>
                             <label for="absences">Absences</label>
-                            <input type="number" id="absences" name="Absences" placeholder="Absences" value="0" />
+                            <input type="number" id="absences" name="Absences" placeholder="Absences" value="0" data-column="Absences" />
                         </div>
                         <div>
                             <label for="tutoring">Tutoring</label>
-                            <select id="tutoring" name="Tutoring">
+                            <select id="tutoring" name="Tutoring" data-column="Tutoring">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div>
                             <label for="parentalSupport">Parental Support</label>
-                            <select id="parentalSupport" name="ParentalSupport">
+                            <select id="parentalSupport" name="ParentalSupport" data-column="ParentalSupport">
                                 <option value="0">None</option>
                                 <option value="1">Low</option>
                                 <option value="2">Moderate</option>
@@ -85,43 +91,46 @@
                         </div>
                         <div>
                             <label for="extracurricular">Extracurricular</label>
-                            <select id="extracurricular" name="Extracurricular">
+                            <select id="extracurricular" name="Extracurricular" data-column="Extracurricular">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div>
                             <label for="sports">Sports</label>
-                            <select id="sports" name="Sports">
+                            <select id="sports" name="Sports" data-column="Sports">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div>
                             <label for="music">Music</label>
-                            <select id="music" name="Music">
+                            <select id="music" name="Music" data-column="Music">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div>
                             <label for="volunteering">Volunteering</label>
-                            <select id="volunteering" name="Volunteering">
+                            <select id="volunteering" name="Volunteering" data-column="Volunteering">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div>
                             <label for="gpa">GPA</label>
-                            <input type="number" id="gpa" name="GPA" placeholder="GPA" step="0.01" min="0" max="4" value="0" />
+                            <input type="number" id="gpa" name="GPA" placeholder="GPA" step="0.01" min="0" max="4" value="0" data-column="GPA" />
+                        </div>
+                        <div>
+                            <label for="modelSelector">Model</label>
+                            <select id="modelSelector" onchange="updateInputFields()">
+                                <option value="XGBoost">XGBoost</option>
+                                <option value="Neural Network">Neural Network</option>
+                                <option value="Random Forest">Random Forest</option>
+                                <option value="Logistic Regression">Logistic Regression</option>
+                            </select>
                         </div>
                     </div>
-                    <select id="modelSelector">
-                        <option value="XGBoost">XGBoost</option>
-                        <option value="Neural Network">Neural Network</option>
-                        <option value="Random Forest">Random Forest</option>
-                        <option value="Logistic Regression">Logistic Regression</option>
-                    </select>
                     <button type="button" onclick="submitForm()">Predict</button>
                 </form>
             </div>

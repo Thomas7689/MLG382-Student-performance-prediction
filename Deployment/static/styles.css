@@ -63,6 +63,7 @@ input[type="number"], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
 button {
@@ -77,4 +78,23 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+body.loading {
+    cursor: wait;
+}
+
+input:disabled, select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.grade-class {
+    font-weight: bold;
+    color: #007BFF;
 }
