@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from Deployment.MLModels import ReadFile, TrainModel
+from MLModels import ReadFile, TrainModel
 import pandas as pd
 import joblib
 import os
@@ -38,7 +38,7 @@ def predict():
         for col in input_df.columns:
             if col in ['StudyTimeWeekly', 'Absences', 'GPA']:
                 input_df[col] = pd.to_numeric(input_df[col], errors='coerce')
-            elif col in ['ParentalEducation', 'Tutoring', 'ParentalSupport', 'Extracurricular', 'Sports', 'Volunteering']:
+            elif col in ['ParentalEducation', 'Tutoring', 'ParentalSupport']:
                 input_df[col] = input_df[col].astype('category').cat.codes
         
         # Fill any NaN values that may have resulted from conversion
@@ -58,7 +58,8 @@ def list_models():
     for model_file in model_files:
         parts = model_file.split('_')
         model_type = parts[1]
-        columns = parts[2:-1]
+        columns = parts[2:]
+        columns = '_'.join(columns).replace('.joblib', '').split('_')
         model_name = f"{model_type}_{'_'.join(columns)}"
         models_info[model_name] = columns
     return jsonify({'models': models_info if models_info else {'None': []}})

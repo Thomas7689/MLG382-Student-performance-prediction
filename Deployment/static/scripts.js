@@ -17,21 +17,13 @@ document.getElementById('absences').addEventListener('input', function() {
     validateInput(this, 0, 100);
 });
 
-document.getElementById('gpa').addEventListener('input', function() {
-    validateInput(this, 0, 4);
-});
-
 function submitForm() {
     const inputData = {
-        ParentalEducation: document.getElementById('parentalEducation').value,
         StudyTimeWeekly: document.getElementById('studyTimeWeekly').value,
         Absences: document.getElementById('absences').value,
         Tutoring: document.getElementById('tutoring').value,
         ParentalSupport: document.getElementById('parentalSupport').value,
-        Extracurricular: document.getElementById('extracurricular').value,
-        Sports: document.getElementById('sports').value,
-        Volunteering: document.getElementById('volunteering').value,
-        GPA: document.getElementById('gpa').value
+        ParentalEducation: document.getElementById('parentalEducation').value
     };
     const selectedColumns = Array.from(document.querySelectorAll('input[name="columns"]:checked')).map(el => el.value);
     const selectedModel = document.getElementById('modelSelector').value;

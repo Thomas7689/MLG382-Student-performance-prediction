@@ -11,15 +11,11 @@
         <div class="main-content">
             <div class="checkbox-group">
                 <h2>Select Columns</h2>
-                <label><input type="checkbox" name="columns" value="ParentalEducation" checked> Parental Education</label>
                 <label><input type="checkbox" name="columns" value="StudyTimeWeekly" checked> Study Time Weekly</label>
                 <label><input type="checkbox" name="columns" value="Absences" checked> Absences</label>
                 <label><input type="checkbox" name="columns" value="Tutoring" checked> Tutoring</label>
                 <label><input type="checkbox" name="columns" value="ParentalSupport" checked> Parental Support</label>
-                <label><input type="checkbox" name="columns" value="Extracurricular" checked> Extracurricular</label>
-                <label><input type="checkbox" name="columns" value="Sports" checked> Sports</label>
-                <label><input type="checkbox" name="columns" value="Volunteering" checked> Volunteering</label>
-                <label><input type="checkbox" name="columns" value="GPA" checked> GPA</label>
+                <label><input type="checkbox" name="columns" value="ParentalEducation" checked> Parental Education</label>
                 <select id="modelSelector" onchange="updateInputFields()">
                     <option value="XGBoost">XGBoost</option>
                     <option value="Neural Network">Neural Network</option>
@@ -30,16 +26,6 @@
             <div class="form-group">
                 <form id="predictForm">
                     <div class="input-group">
-                        <div>
-                            <label for="parentalEducation">Parental Education</label>
-                            <select id="parentalEducation" name="ParentalEducation" data-column="ParentalEducation">
-                                <option value="0">None</option>
-                                <option value="1">High School</option>
-                                <option value="2">Some College</option>
-                                <option value="3">Bachelor's</option>
-                                <option value="4">Higher Study</option>
-                            </select>
-                        </div>
                         <div>
                             <label for="studyTimeWeekly">Study Time Weekly</label>
                             <input type="number" id="studyTimeWeekly" name="StudyTimeWeekly" placeholder="Study Time Weekly" value="0" data-column="StudyTimeWeekly" />
@@ -66,29 +52,14 @@
                             </select>
                         </div>
                         <div>
-                            <label for="extracurricular">Extracurricular</label>
-                            <select id="extracurricular" name="Extracurricular" data-column="Extracurricular">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
+                            <label for="parentalEducation">Parental Education</label>
+                            <select id="parentalEducation" name="ParentalEducation" data-column="ParentalEducation">
+                                <option value="0">None</option>
+                                <option value="1">High School</option>
+                                <option value="2">Some College</option>
+                                <option value="3">Bachelor's</option>
+                                <option value="4">Higher Study</option>
                             </select>
-                        </div>
-                        <div>
-                            <label for="sports">Sports</label>
-                            <select id="sports" name="Sports" data-column="Sports">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="volunteering">Volunteering</label>
-                            <select id="volunteering" name="Volunteering" data-column="Volunteering">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="gpa">GPA</label>
-                            <input type="number" id="gpa" name="GPA" placeholder="GPA" step="0.01" min="0" max="4" value="0" data-column="GPA" />
                         </div>
                     </div>
                     <button type="button" onclick="submitForm()">Predict</button>
