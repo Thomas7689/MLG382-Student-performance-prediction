@@ -23,11 +23,11 @@ This project aims to predict student performance using machine learning techniqu
 
 ## Usage
 1. Prepare the dataset and place it in the `data/` directory.
-2. Run all the models
+2. Run all the models in the notebooks.
 
 ## Project Structure
 - `data/`: Contains the dataset.
-- `notebooks/`: Jupyter notebooks for exploratory data analysis.
+- `Project 1/`: Jupyter notebooks for exploratory data analysis.
 - `src/`: Source code for preprocessing, training, and evaluation.
 - `artifacts/`: Saved machine learning models.
 
