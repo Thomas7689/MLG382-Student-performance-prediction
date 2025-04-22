@@ -9,8 +9,12 @@ function validateInput(inputElement, min, max) {
     }
 }
 
-document.getElementById('age').addEventListener('input', function() {
-    validateInput(this, 15, 18);
+document.getElementById('studyTimeWeekly').addEventListener('input', function() {
+    validateInput(this, 0, 100);
+});
+
+document.getElementById('absences').addEventListener('input', function() {
+    validateInput(this, 0, 100);
 });
 
 document.getElementById('gpa').addEventListener('input', function() {
@@ -18,12 +22,7 @@ document.getElementById('gpa').addEventListener('input', function() {
 });
 
 function submitForm() {
-    const age = document.getElementById('age').value;
-    const gpa = document.getElementById('gpa').value;
     const inputData = {
-        Age: age,
-        Gender: document.getElementById('gender').value,
-        Ethnicity: document.getElementById('ethnicity').value,
         ParentalEducation: document.getElementById('parentalEducation').value,
         StudyTimeWeekly: document.getElementById('studyTimeWeekly').value,
         Absences: document.getElementById('absences').value,
@@ -31,9 +30,8 @@ function submitForm() {
         ParentalSupport: document.getElementById('parentalSupport').value,
         Extracurricular: document.getElementById('extracurricular').value,
         Sports: document.getElementById('sports').value,
-        Music: document.getElementById('music').value,
         Volunteering: document.getElementById('volunteering').value,
-        GPA: gpa
+        GPA: document.getElementById('gpa').value
     };
     const selectedColumns = Array.from(document.querySelectorAll('input[name="columns"]:checked')).map(el => el.value);
     const selectedModel = document.getElementById('modelSelector').value;
@@ -46,66 +44,15 @@ function submitForm() {
     })
     .then(response => response.json())
     .then(data => {
-        const gradeClassMap = ['A', 'B', 'C', 'D', 'F'];
-        const gradeClass = gradeClassMap[data.prediction[0]];
-        document.getElementById('result').innerHTML = `<strong>Grade Class Prediction:</strong> <span class="grade-class">${gradeClass}</span>`;
+        if (data.error) {
+            alert(data.error);
+        } else {
+            const gradeClassMap = ['A', 'B', 'C', 'D', 'F'];
+            const gradeClass = gradeClassMap[data.prediction[0]];
+            document.getElementById('result').innerHTML = `<strong>Grade Class Prediction:</strong> <span class="grade-class">${gradeClass}</span>`;
+        }
     })
     .catch(error => console.error('Error:', error));
-}
-
-function trainModel() {
-    const selectedColumns = Array.from(document.querySelectorAll('input[name="columns"]:checked')).map(el => el.value);
-    const selectedModel = document.getElementById('trainModelSelector').value;
-    // Add loading cursor
-    document.body.classList.add('loading');
-    fetch('/train', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ model: selectedModel, columns: selectedColumns })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Model trained successfully!');
-        updateModelSelector();
-    })
-    .catch(error => console.error('Error:', error))
-    .finally(() => {
-        // Remove loading cursor
-        document.body.classList.remove('loading');
-    });
-}
-
-function updateModelSelector() {
-    fetch('/list_models')
-    .then(response => response.json())
-    .then(data => {
-        const modelSelector = document.getElementById('modelSelector');
-        modelSelector.innerHTML = '';
-        Object.keys(data.models).forEach(model => {
-            const option = document.createElement('option');
-            option.value = model;
-            option.text = model;
-            modelSelector.appendChild(option);
-        });
-        // Call updateInputFields after updating the model selector
-        updateInputFields();
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function updateInputFields() {
-    console.log("updateInputFields called");
-    const selectedModel = document.getElementById('modelSelector').value;
-    console.log("Selected model:", selectedModel);
-    fetch(`/list_models`)
-        .then(response => response.json())
-        .then(data => {
-            const selectedColumns = data.models[selectedModel];
-            disableInputBoxes(selectedColumns);
-        })
-        .catch(error => console.error('Error:', error));
 }
 
 function disableInputBoxes(selectedColumns) {
@@ -120,5 +67,28 @@ function disableInputBoxes(selectedColumns) {
     });
 }
 
-document.getElementById('modelSelector').addEventListener('change', updateInputFields);
-document.addEventListener('DOMContentLoaded', updateModelSelector);
+function updateInputFields() {
+    const selectedColumns = Array.from(document.querySelectorAll('input[name="columns"]:checked')).map(el => el.value);
+    disableInputBoxes(selectedColumns);
+}
+
+document.querySelectorAll('input[name="columns"]').forEach(checkbox => {
+    checkbox.addEventListener('change', updateInputFields);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateInputFields();
+    updateModelSelector();
+});
+
+function updateModelSelector() {
+    const modelSelector = document.getElementById('modelSelector');
+    const models = ['XGBoost', 'Neural Network', 'Random Forest', 'Logistic Regression'];
+    modelSelector.innerHTML = '';
+    models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model;
+        option.text = model;
+        modelSelector.appendChild(option);
+    });
+}
