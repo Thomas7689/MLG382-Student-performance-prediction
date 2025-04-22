@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from MLModels import ReadFile, TrainModel
+from Deployment.MLModels import ReadFile, TrainModel
 import pandas as pd
 import joblib
 import os
