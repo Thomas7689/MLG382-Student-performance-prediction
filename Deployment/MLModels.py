@@ -7,11 +7,15 @@ from sklearn.neural_network import MLPClassifier
 from category_encoders.target_encoder import TargetEncoder
 from skopt import BayesSearchCV
 from skopt.space import Real, Integer
-from xgboost import plot_importance, plot_tree
 from xgboost import XGBClassifier
+import os
+
+
 
 def ReadFile():
-    df = pd.read_csv('../Project 1/Student_performance_data.csv')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(BASE_DIR, '../Project 1/Student_performance_data.csv')
+    df = pd.read_csv(file_path)
     df.drop(columns='StudentID', inplace=True)
     return df
 

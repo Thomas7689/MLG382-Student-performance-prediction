@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from Deployment.MLModels import ReadFile, TrainModel
 import pandas as pd
 import joblib
-import os
+
 
 app = Flask(__name__)
 
@@ -28,7 +28,7 @@ def predict():
         
         # Ensure the input_df only contains the selected columns
         input_df = input_df[selected_columns]
-        
+        print(input_df)
         # Convert columns to appropriate data types
         for col in input_df.columns:
             if col in ['Age', 'StudyTimeWeekly', 'Absences', 'GPA']:
@@ -77,6 +77,8 @@ def train():
         return jsonify({'message': 'Model trained successfully!'})
     else:
         return jsonify({"error": "Unsupported Media Type"}), 415
+    
+
 @app.route('/list_models', methods=['GET'])
 def list_models():
     model_files = [f.split('_model.pkl')[0] for f in os.listdir() if f.endswith('_model.pkl')]
