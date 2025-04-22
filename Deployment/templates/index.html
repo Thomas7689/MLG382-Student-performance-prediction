@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Model Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ML Model Prediction</h1>
+        <div class="main-content">
+            <div class="checkbox-group">
+                <h2>Select Columns</h2>
+                <label><input type="checkbox" name="columns" value="Age" checked> Age</label>
+                <label><input type="checkbox" name="columns" value="Gender" checked> Gender</label>
+                <label><input type="checkbox" name="columns" value="Ethnicity" checked> Ethnicity</label>
+                <label><input type="checkbox" name="columns" value="ParentalEducation" checked> Parental Education</label>
+                <label><input type="checkbox" name="columns" value="StudyTimeWeekly" checked> Study Time Weekly</label>
+                <label><input type="checkbox" name="columns" value="Absences" checked> Absences</label>
+                <label><input type="checkbox" name="columns" value="Tutoring" checked> Tutoring</label>
+                <label><input type="checkbox" name="columns" value="ParentalSupport" checked> Parental Support</label>
+                <label><input type="checkbox" name="columns" value="Extracurricular" checked> Extracurricular</label>
+                <label><input type="checkbox" name="columns" value="Sports" checked> Sports</label>
+                <label><input type="checkbox" name="columns" value="Music" checked> Music</label>
+                <label><input type="checkbox" name="columns" value="Volunteering" checked> Volunteering</label>
+                <label><input type="checkbox" name="columns" value="GPA" checked> GPA</label>
+                <button type="button" onclick="trainModel()">Train Model</button>
+            </div>
+            <div class="form-group">
+                <form id="predictForm">
+                    <div class="input-group">
+                        <div>
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="Age" placeholder="Age" min="15" max="18" value="15" />
+                        </div>
+                        <div>
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="Gender">
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="ethnicity">Ethnicity</label>
+                            <select id="ethnicity" name="Ethnicity">
+                                <option value="0">Caucasian</option>
+                                <option value="1">African American</option>
+                                <option value="2">Asian</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="parentalEducation">Parental Education</label>
+                            <select id="parentalEducation" name="ParentalEducation">
+                                <option value="0">None</option>
+                                <option value="1">High School</option>
+                                <option value="2">Some College</option>
+                                <option value="3">Bachelor's</option>
+                                <option value="4">Higher Study</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="studyTimeWeekly">Study Time Weekly</label>
+                            <input type="number" id="studyTimeWeekly" name="StudyTimeWeekly" placeholder="Study Time Weekly" value="0" />
+                        </div>
+                        <div>
+                            <label for="absences">Absences</label>
+                            <input type="number" id="absences" name="Absences" placeholder="Absences" value="0" />
+                        </div>
+                        <div>
+                            <label for="tutoring">Tutoring</label>
+                            <select id="tutoring" name="Tutoring">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="parentalSupport">Parental Support</label>
+                            <select id="parentalSupport" name="ParentalSupport">
+                                <option value="0">None</option>
+                                <option value="1">Low</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">High</option>
+                                <option value="4">Very High</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="extracurricular">Extracurricular</label>
+                            <select id="extracurricular" name="Extracurricular">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="sports">Sports</label>
+                            <select id="sports" name="Sports">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="music">Music</label>
+                            <select id="music" name="Music">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="volunteering">Volunteering</label>
+                            <select id="volunteering" name="Volunteering">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="gpa">GPA</label>
+                            <input type="number" id="gpa" name="GPA" placeholder="GPA" step="0.01" min="0" max="4" value="0" />
+                        </div>
+                    </div>
+                    <select id="modelSelector">
+                        <option value="XGBoost">XGBoost</option>
+                        <option value="Neural Network">Neural Network</option>
+                        <option value="Random Forest">Random Forest</option>
+                        <option value="Logistic Regression">Logistic Regression</option>
+                    </select>
+                    <button type="button" onclick="submitForm()">Predict</button>
+                </form>
+            </div>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
