@@ -70,17 +70,4 @@ document.querySelectorAll('input[name="columns"]').forEach(checkbox => {
 
 document.addEventListener('DOMContentLoaded', () => {
     updateInputFields();
-    updateModelSelector();
 });
-
-function updateModelSelector() {
-    const modelSelector = document.getElementById('modelSelector');
-    const models = ['XGBoost', 'Neural Network', 'Random Forest', 'Logistic Regression'];
-    modelSelector.innerHTML = '';
-    models.forEach(model => {
-        const option = document.createElement('option');
-        option.value = model;
-        option.text = model;
-        modelSelector.appendChild(option);
-    });
-}

@@ -50,7 +50,7 @@ def TrainModel(dataFrame, TrainOnColumns, typeOfModel, testSize=0.2):
             model = BayesSearchCV(pipe, searchSpace, cv=5, n_iter=20, scoring='roc_auc_ovr', random_state=1, refit=True)
             model.fit(xTrain, yTrain)
         case 'Random Forest':
-            RFModel = RandomForestClassifier(random_state=1)
+            RFModel = RandomForestClassifier(random_state=1, class_weight='balanced_subsample')
             searchSpace = {
                 'max_depth': Integer(2, 6),
                 'ccp_alpha': Real(0.0, 10.0),
@@ -58,7 +58,7 @@ def TrainModel(dataFrame, TrainOnColumns, typeOfModel, testSize=0.2):
                 'min_samples_split': Integer(2, 10),
                 'min_samples_leaf': Integer(2, 10),
             }
-            model = BayesSearchCV(estimator=RFModel, search_spaces=searchSpace, n_iter=20, cv=3, random_state=1)
+            model = BayesSearchCV(estimator=RFModel, search_spaces=searchSpace, n_iter=20, cv=3, random_state=2)
             model.fit(xTrain, yTrain)
         case 'Logistic Regression':
             model = LogisticRegression(max_iter=2000)
@@ -76,15 +76,18 @@ def generate_and_save_models():
                           'StudyTimeWeekly', 'Absences', 'Tutoring', 
                           'ParentalSupport', 'ParentalEducation']
     
-    models_to_train = ['XGBoost', 'Random Forest', 'Logistic Regression', 'Neural Network']
+    # models_to_train = ['XGBoost', 'Random Forest', 'Logistic Regression', 'Neural Network']
+    models_to_train = ['Random Forest']
     for r in range(1, len(columns_to_combine) + 1):
         for combination in itertools.combinations(columns_to_combine, r):
             for model_type in models_to_train:
                 filename = f"model_{model_type}_{'_'.join(combination)}.joblib"
-                if not os.path.exists(filename):
-                    model = TrainModel(df, list(combination), model_type)
-                    joblib.dump(model, filename)
-                else:
-                    print(f"Model {filename} already exists. Skipping...")
+                model = TrainModel(df, list(combination), model_type)
+                joblib.dump(model, filename)
+                # if not os.path.exists(filename):
+                #     model = TrainModel(df, list(combination), model_type)
+                #     joblib.dump(model, filename)
+                # else:
+                #     print(f"Model {filename} already exists. Skipping...")
 
 generate_and_save_models()

@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import joblib
 import os
-import itertools
 
 app = Flask(__name__)
 
